@@ -4,7 +4,7 @@
 int main(){
 	int a[12], b[12], c[12];
 
-#pragma omp parallel num_threads(12)
+#pragma omp parallel num_threads(3)
 	{
 #pragma omp for schedule(static, 3)
 		for (int i = 0; i < 12; i++){

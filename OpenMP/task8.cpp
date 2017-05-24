@@ -1,12 +1,8 @@
-//
-// Created by Alexander Leontjev on 14.03.17.
-//
-
 #include <omp.h>
 #include <stdio.h>
 
 int main() {
-    double a[16000];
+    int a[16000];
 
     for (int i = 0; i < 16000; i++) {
         a[i] = i;
@@ -20,11 +16,8 @@ int main() {
 #pragma omp parallel num_threads(8)
     {
 #pragma omp schedule(static) for
-        for (int i = 0; i < 16000; i++) {
-            if (i != 0 | i != 15999)
+        for (int i = 1; i < 15999; i++) {
                 b[i] = (a[i] + a[i - 1] + a[i + 1]) / 3.0;
-            else
-                b[i] = i;
         }
     }
     end_time = omp_get_wtime();
@@ -34,11 +27,8 @@ int main() {
 #pragma omp parallel num_threads(8)
     {
 #pragma omp schedule(dynamic) for
-        for (int i = 0; i < 16000; i++) {
-            if (i != 0 | i != 15999)
+        for (int i = 1; i < 15999; i++) {
                 b[i] = (a[i] + a[i - 1] + a[i + 1]) / 3.0;
-            else
-                b[i] = i;
         }
         start_time = end_time;
         end_time = omp_get_wtime();
@@ -48,11 +38,8 @@ int main() {
 #pragma omp parallel num_threads(8)
     {
 #pragma omp schedule(guided) for
-        for (int i = 0; i < 16000; i++) {
-            if (i != 0 | i != 15999)
+        for (int i = 1; i < 15999; i++) {
                 b[i] = (a[i] + a[i - 1] + a[i + 1]) / 3.0;
-            else
-                b[i] = i;
         }
         start_time = end_time;
         end_time = omp_get_wtime();
@@ -62,11 +49,8 @@ int main() {
 #pragma omp parallel num_threads(8)
     {
 #pragma omp schedule(auto) for
-        for (int i = 0; i < 16000; i++) {
-            if (i != 0 | i != 15999)
+        for (int i = 1; i < 15999; i++) {
                 b[i] = (a[i] + a[i - 1] + a[i + 1]) / 3.0;
-            else
-                b[i] = i;
         }
         start_time = end_time;
         end_time = omp_get_wtime();
@@ -75,5 +59,3 @@ int main() {
 
     return 0;
 }
-
-
